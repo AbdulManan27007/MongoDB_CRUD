@@ -14,21 +14,34 @@ const UserSchema = new mongoose.Schema({
 //'Users' Database folder name where to store data
 const UserModel = mongoose.model("users", UserSchema); 
 
+app.get("/delete", async (req, res) => {
+ let deleteuser= await UserModel.findOneAndDelete({username:"awais"});
+ res.send(deleteuser)
+
+
+app.get("/read", async (req, res) => {
+   // if read the selective user--> let readuser= await UserModel.find({username:"awais"});
+let readuser= await UserModel.find();
+res.send(readuser)
+
+
 app.get("/update", async (req, res) => {       //username where u store  // update
     let updateduser = await UserModel.findOneAndUpdate({username:"abdulmanan4066"}, {name:"Abdul Manan Ilyas"},{new: true} )
+res.send(updateduser);
 
 
-
-//create user in database
-// app.get("/create", async (req, res) => {
-//     let createdUser = await UserModel.create({
-//         name: "AbdullManan",
-//         email: "abdulmanan@gmail.com",
-//         username: "abdulmanan4066"
-//     });
-
-
-    res.send(updateduser);
+// create user in database
+app.get("/create", async (req, res) => {
+        let createdUser = await UserModel.create({
+            name: "Awais",
+            email: "awais@gmail.com",
+            username: "awais"
+        });
+        res.send(createdUser);
+   
+});
+});
+});
 });
 
 app.listen(3000, () => {
